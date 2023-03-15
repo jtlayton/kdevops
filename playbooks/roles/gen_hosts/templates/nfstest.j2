@@ -1,0 +1,35 @@
+[all]
+{{ kdevops_hosts_prefix }}-c
+{{ kdevops_hosts_prefix }}-s
+{% if kdevops_baseline_and_dev == True %}
+{{ kdevops_hosts_prefix }}-c-dev
+{{ kdevops_hosts_prefix }}-s-dev
+{% endif %}
+[all:vars]
+ansible_python_interpreter =  "{{ kdevops_python_interpreter }}"
+[baseline]
+{{ kdevops_hosts_prefix }}-c
+{{ kdevops_hosts_prefix }}-s
+[baseline:vars]
+ansible_python_interpreter =  "{{ kdevops_python_interpreter }}"
+[dev]
+{% if kdevops_baseline_and_dev %}
+{{ kdevops_hosts_prefix }}-c-dev
+{{ kdevops_hosts_prefix }}-s-dev
+{% endif %}
+[dev:vars]
+ansible_python_interpreter =  "{{ kdevops_python_interpreter }}"
+[clients]
+{{ kdevops_hosts_prefix }}-c
+{% if kdevops_baseline_and_dev %}
+{{ kdevops_hosts_prefix }}-c-dev
+{% endif %}
+[clients:vars]
+ansible_python_interpreter =  "{{ kdevops_python_interpreter }}"
+[servers]
+{{ kdevops_hosts_prefix }}-s
+{% if kdevops_baseline_and_dev %}
+{{ kdevops_hosts_prefix }}-s-dev
+{% endif %}
+[servers:vars]
+ansible_python_interpreter =  "{{ kdevops_python_interpreter }}"

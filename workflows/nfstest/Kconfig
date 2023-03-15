@@ -1,0 +1,9 @@
+if KDEVOPS_WORKFLOW_ENABLE_NFSTEST
+
+config NFSTEST_GIT
+	string "The nfstest git tree to clone"
+	default "git://git.linux-nfs.org/projects/mora/nfstest.git"
+	help
+	  The nfstest git tree to clone.
+
+endif # KDEVOPS_WORKFLOW_ENABLE_NFSTEST

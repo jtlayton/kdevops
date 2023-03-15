@@ -1,0 +1,8 @@
+# SPDX-License-Identifier GPL-2.0+
+---
+# Our sensible defaults for the nfstest role.
+#
+# We default to not run tests.
+kdevops_run_nfstest: False
+
+nfstest_data: "{{ data_path }}/nfstest"

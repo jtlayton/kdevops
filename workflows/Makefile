@@ -34,6 +34,11 @@ WORKFLOW_ARGS += kdevops_workflow_enable_pynfs='True'
 include workflows/pynfs/Makefile
 endif # CONFIG_KDEVOPS_WORKFLOW_ENABLE_PYNFS == y
 
+ifeq (y,$(CONFIG_KDEVOPS_WORKFLOW_ENABLE_NFSTEST))
+WORKFLOW_ARGS += kdevops_workflow_enable_nfstest='True'
+include workflows/nfstest/Makefile
+endif # CONFIG_KDEVOPS_WORKFLOW_ENABLE_NFSTEST == y
+
 ifeq (y,$(CONFIG_KDEVOPS_WORKFLOW_ENABLE_SELFTESTS))
 WORKFLOW_ARGS += kdevops_workflow_enable_selftests='True'
 include workflows/selftests/Makefile

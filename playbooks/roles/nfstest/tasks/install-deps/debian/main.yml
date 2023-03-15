@@ -1,0 +1,22 @@
+---
+- name: Update apt cache
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+  tags: linux
+
+- name: Install nfstest build dependencies
+  become: yes
+  become_method: sudo
+  apt:
+    name:
+      - gcc
+      - git-core
+      - make
+      - libkrb5-dev
+      - python3.9
+      - nfs-utils
+    state: present
+    update_cache: yes
+  tags: [ 'nfstest', 'deps' ]
