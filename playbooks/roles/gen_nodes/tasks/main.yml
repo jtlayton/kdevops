@@ -23,17 +23,24 @@
     path: "{{ kdevops_nodes_template_full_path }}"
   register: ansible_nodes_template
 
+- name: Set initial nodes array
+  tags: vars
+  set_fact:
+    initial_nodes: "{{ [ kdevops_host_prefix ] }}"
+    generic_nodes: []
+
 - name: Set generic nodes array
   tags: vars
   set_fact:
-    generic_nodes: "{{ [ kdevops_host_prefix ] }}"
+    generic_nodes: "{{ initial_nodes }}"
   when:
     - not kdevops_baseline_and_dev
 
 - name: Set generic nodes array on dual baseline and dev systems
   tags: vars
   set_fact:
-    generic_nodes: "{{ [ kdevops_host_prefix ] + [ kdevops_host_prefix + '-dev' ] }}"
+    generic_nodes: "{{ generic_nodes  + [ item ] + [ item + '-dev' ] }}"
+  with_list: "{{ initial_nodes }}"
   when:
     - kdevops_baseline_and_dev
 
