@@ -1,0 +1,22 @@
+# reflink issue? Possible data corruption
+generic/186
+generic/187
+
+# EEXIST instead of EROFS (do we care?)
+generic/294
+
+# swapon with reflinked file?
+generic/357
+
+# xattr problem (fix probing for max size?)
+generic/486
+
+# file capabilities unsupported -- fix for fstests pending
+generic/513
+
+# /media/test/test-578/file1: FIBMAP/FIEMAP unsupported -- fix for fstests pending
+generic/578
+
+# reflink setuid handling
+generic/675
+generic/688
