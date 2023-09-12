@@ -1143,7 +1143,7 @@ config VAGRANT_SUSE
 	    https://suse.com/download
 
 config VAGRANT_FEDORA
-	bool "Fedora"
+	bool "Fedora (or derived distro)"
 	select HAVE_VAGRANT_BOX_VERSION
 	select HAVE_DISTRO_XFS_PREFERS_MANUAL if FSTESTS_XFS
 	select HAVE_DISTRO_BTRFS_PREFERS_MANUAL if FSTESTS_BTRFS
@@ -1151,18 +1151,9 @@ config VAGRANT_FEDORA
 	select HAVE_DISTRO_PREFERS_FSTESTS_WATCHDOG if KDEVOPS_WORKFLOW_ENABLE_FSTESTS
 	select HAVE_DISTRO_PREFERS_FSTESTS_WATCHDOG_KILL if KDEVOPS_WORKFLOW_ENABLE_FSTESTS
 	help
-	  This option will set the target guest to Fedora.
-
-config VAGRANT_REDHAT_GENERIC
-	bool "Red Hat generic"
-	select HAVE_CUSTOM_DISTRO_HOST_PREFIX
-	select HAVE_DISTRO_PREFERS_CUSTOM_HOST_PREFIX
-	help
-	  This option will set the target guest to Red Hat using the generic
-	  Vagrant source as the author. In other words, you are on your own
-	  with these. And you won't be able to do much with these guests
-	  other than get a base guest up. Patches are welcomed to enable
-	  registration to make them more useful.
+	  This option will set the target guest to be a Fedora-derived distro: e.g.
+	  CentOS Stream, RHEL, or Fedora itself. Note that RHEL registration is not
+	  yet implemented.
 
 config VAGRANT_KDEVOPS
 	bool "kdevops kernel builds"
