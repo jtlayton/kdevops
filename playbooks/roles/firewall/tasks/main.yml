@@ -1,0 +1,36 @@
+---
+# "nfs3" enables both TCP and UDP
+- name: Allow NFS through the firewall
+  ansible.posix.firewalld:
+    service: nfs3
+    permanent: true
+    state: enabled
+    tags: [ server, client ]
+
+- name: Allow mountd through the firewall
+  ansible.posix.firewalld:
+    service: mountd
+    permanent: true
+    state: enabled
+    tags: [ server ]
+
+- name: Allow TCP lockd and statd traffic through the firewall
+  ansible.posix.firewalld:
+    port: 20050-20051/tcp
+    permanent: true
+    state: enabled
+    tags: [ server, client ]
+
+- name: Allow UDP lockd and statd traffic through the firewall
+  ansible.posix.firewalld:
+    port: 20050-20051/udp
+    permanent: true
+    state: enabled
+    tags: [ server, client ]
+
+- name: Allow rpcbind through the firewall
+  ansible.posix.firewalld:
+    service: rpc-bind
+    permanent: true
+    state: enabled
+    tags: [ server, client ]
