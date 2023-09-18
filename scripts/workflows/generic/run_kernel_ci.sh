@@ -122,7 +122,7 @@ kernel_ci_post_process()
 			SUBJECT="$SUBJECT and watchdog picked up a hang"
 		fi
 
-		cat $KERNEL_CI_DIFF_LOG | mail -s "'$SUBJECT'" $MAIL_FROM_MOD $RCPT
+		cat $KERNEL_CI_DIFF_LOG | mail -s "$SUBJECT" $MAIL_FROM_MOD $RCPT
 		echo $SUBJECT
 		exit 1
 	elif [[ -f $KERNEL_CI_OK_FILE ]]; then
@@ -137,7 +137,7 @@ kernel_ci_post_process()
 			SUBJECT="$(kernel_ci_subject_topic): ${TARGET_WORFKLOW_NAME} detected a hang after $LOOP_COUNT test loops"
 		fi
 
-		cat $KERNEL_CI_FAIL_LOG | mail -s "'$SUBJECT'" $MAIL_FROM_MOD $RCPT
+		cat $KERNEL_CI_FAIL_LOG | mail -s "$SUBJECT" $MAIL_FROM_MOD $RCPT
 		echo "$SUBJECT"
 
 		if [[  -f $KERNEL_CI_WATCHDOG_FAIL_LOG ]]; then
@@ -148,7 +148,7 @@ kernel_ci_post_process()
 	elif [[  -f $KERNEL_CI_WATCHDOG_FAIL_LOG ]]; then
 		SUBJECT="$(kernel_ci_subject_topic): ${TARGET_WORFKLOW_NAME} failed on a hung test on the first loop"
 		cat $KERNEL_CI_WATCHDOG_FAIL_LOG
-		cat $KERNEL_CI_DIFF_LOG | mail -s "'$SUBJECT'" $MAIL_FROM_MOD $RCPT
+		cat $KERNEL_CI_DIFF_LOG | mail -s "$SUBJECT" $MAIL_FROM_MOD $RCPT
 		exit 1
 	else
 		echo "The kernel-ci loop will create the file $KERNEL_CI_FAIL_FILE if"
@@ -157,7 +157,7 @@ kernel_ci_post_process()
 		echo "This is an unexpected situation."
 
 		SUBJECT="$(kernel_ci_subject_topic): ${TARGET_WORFKLOW_NAME} exited in an unexpection situation"
-		cat $KERNEL_CI_LOGTIME_FULL | mail -s "'$SUBJECT'" $MAIL_FROM_MOD $RCPT
+		cat $KERNEL_CI_LOGTIME_FULL | mail -s "$SUBJECT" $MAIL_FROM_MOD $RCPT
 		exit 1
 	fi
 }
@@ -269,7 +269,7 @@ if [[ "$CONFIG_KERNEL_CI_EMAIL_REPORT" == "y" ]]; then
 fi
 
 if [[ "$CONFIG_KERNEL_CI_EMAIL_MODIFY_FROM" == "y" ]]; then
-	MAIL_FROM_MOD="-r '$CONFIG_KERNEL_CI_EMAIL_FROM'"
+	MAIL_FROM_MOD="-r $CONFIG_KERNEL_CI_EMAIL_FROM"
 fi
 
 if [[ "$ENABLE_WATCHDOG" == "y" ]]; then
