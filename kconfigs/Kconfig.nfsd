@@ -57,7 +57,7 @@ config NFSD_EXPORT_OPTIONS
 
 config NFSD_THREADS
 	int "Number of nfsd threads to spawn"
-	default 8
+	default 128
 	help
 	  Number of nfsd threads to start up for testing.
 
