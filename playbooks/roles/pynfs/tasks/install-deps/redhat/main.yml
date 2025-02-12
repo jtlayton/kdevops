@@ -23,3 +23,8 @@
       - swig
       - python3-gssapi
       - python3-ply
+
+- name: Install xdrlib3
+  tags: [ 'pynfs' ]
+  ansible.builtin.pip:
+    name: xdrlib3
