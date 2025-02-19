@@ -2,7 +2,7 @@
 ---
 export_user: "root"
 export_group: "root"
-export_mode: "u=rwx,g=rwx,o=rwxt"
+export_mode: "u=rwx,g=rx,o=rx"
 export_pnfs: false
 
 nfsd_export_storage_local: false
