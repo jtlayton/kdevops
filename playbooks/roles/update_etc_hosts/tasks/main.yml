@@ -52,7 +52,7 @@
   ansible.builtin.lineinfile:
     dest: /etc/hosts
     regexp: '.*{{ item }}$'
-    line: "{{ hostvars[item].ansible_all_ipv4_addresses | ansible.utils.ipaddr(private_network) | first }} {{ item }}"
+    line: "{{ hostvars[item].ansible_facts['all_ipv4_addresses'] | ansible.utils.ipaddr(private_network) | first }} {{ item }}"
     state: present
   with_items: "{{ ueh_hosts }}"
   when:
@@ -65,7 +65,7 @@
   ansible.builtin.lineinfile:
     dest: /etc/hosts
     regexp: ".*{{ item }}$"
-    line: "{{ hostvars[item].ansible_all_ipv4_addresses | first }} {{ item }}"
+    line: "{{ hostvars[item].ansible_facts['all_ipv4_addresses'] | first }} {{ item }}"
     state: present
   with_items: "{{ ueh_hosts }}"
   when:
@@ -77,9 +77,9 @@
   become_method: sudo
   ansible.builtin.lineinfile:
     path: /etc/hosts
-    regexp: "^(127\\.0\\.1\\.1)(\\s+)unassigned-hostname\\.unassigned-domain\\s+({{ ansible_hostname }})$"
+    regexp: "^(127\\.0\\.1\\.1)(\\s+)unassigned-hostname\\.unassigned-domain\\s+({{ ansible_facts['hostname'] }})$"
     backrefs: true
     line: "\\1\\2\\3"
   when:
-    - ansible_os_family == 'Debian'
+    - ansible_facts['os_family'] == 'Debian'
     - kdevops_enable_guestfs|bool

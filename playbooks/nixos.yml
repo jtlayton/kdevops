@@ -38,7 +38,7 @@
           - libvirt-daemon-system
           - libvirt-clients
         state: present
-      when: ansible_os_family == "Debian"
+      when: ansible_facts['os_family'] == "Debian"
 
     - name: Ensure libvirt is installed (RedHat)
       become: true
@@ -48,7 +48,7 @@
           - qemu-kvm
           - libvirt-daemon
         state: present
-      when: ansible_os_family == "RedHat"
+      when: ansible_facts['os_family'] == "RedHat"
 
 - name: Generate NixOS configurations
   hosts: localhost
@@ -432,7 +432,7 @@
           {{ nixos_vm_ips[item] }} \
           {{ ansible_cfg_ssh_port }} \
           kdevops \
-          {{ nixos_ssh_config_file | default(ansible_env.HOME + '/.ssh/config') }} \
+          {{ nixos_ssh_config_file | default(ansible_facts['env'].HOME + '/.ssh/config') }} \
           {{ ssh_key_path_for_config.stdout | trim }} \
           'NixOS VM'
       loop: "{{ groups['all'] | reject('equalto', 'localhost') | list }}"
@@ -484,7 +484,7 @@
           '' \
           '' \
           '' \
-          {{ nixos_ssh_config_file | default(ansible_env.HOME + '/.ssh/config') }} \
+          {{ nixos_ssh_config_file | default(ansible_facts['env'].HOME + '/.ssh/config') }} \
           '' \
           'NixOS VM'
       loop: "{{ groups['all'] | reject('equalto', 'localhost') | list }}"
