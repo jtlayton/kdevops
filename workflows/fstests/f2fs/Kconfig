@@ -1,0 +1,130 @@
+# SPDX-License-Identifier: copyleft-next-0.3.1
+# Distributions actively maintaining f2fs support should select this and then
+# be careful to select any of the other HAVE_DISTRO_F2FS_* below so that
+# testers can know what to test for.
+config HAVE_DISTRO_F2FS_PREFERS_MANUAL
+	bool
+	default n
+
+config FSTESTS_F2FS_MANUAL_COVERAGE
+	bool "Enable manual coverage selection"
+	default y if HAVE_DISTRO_F2FS_PREFERS_MANUAL
+	default n if !HAVE_DISTRO_F2FS_PREFERS_MANUAL
+	help
+	  By default we aim to spawn enough hosts to cover testing the full
+	  range of supported features upstream on the Linux kernel for f2fs,
+	  and for you to also be able to do development on each section
+	  concurrently. Distributions however may override sensible defaults
+	  and only support certain features. Enabling this option lets you
+	  select and test only specific configurations.
+
+	  Since fstests tests are not parallelized and cannot easily be
+	  parallelized and since there are various ways in which you can
+	  create an f2fs filesystem we have devised a strategy to split up
+	  tests by the type of f2fs configuration used when you created the
+	  filesystem. The fstests suite allows you to specify different
+	  configurations using "sections" on an fstests configuration file.
+	  We create then one host per supported target section.
+
+if FSTESTS_F2FS_MANUAL_COVERAGE
+
+config FSTESTS_F2FS_SECTION_REFLINK_ENABLED
+	bool "Enable testing sections which enable reflink"
+	default y
+	help
+	  Enabling this option allows you to select a host used to test
+	  reflink enabled filesystems.
+
+if FSTESTS_F2FS_SECTION_REFLINK_ENABLED
+
+config FSTESTS_F2FS_SECTION_REFLINK
+	bool "Enable testing section: f2fs_reflink"
+	help
+	  This will create a host to test the baseline of fstests using the
+	  default f2fs configuration.
+
+	  Historic f2fs configurations used to pass -O no_heap (and -O no_crc
+	  for checksum-less filesystems) to mkfs.f2fs. Modern f2fs-tools
+	  rejects those as invalid feature names, non-heap based allocation
+	  is now the default, and checksums are disabled unless explicitly
+	  enabled, so MKFS_OPTIONS is simply -f.
+
+	      [f2fs_reflink]
+	      MKFS_OPTIONS='-f'
+
+config FSTESTS_F2FS_SECTION_REFLINK_4K
+	bool "Enable testing section: f2fs_reflink_4k"
+	help
+	  This will create a host to test the baseline of fstests using the
+	  default f2fs configuration. f2fs always uses a 4k block size, so
+	  this section uses the same MKFS_OPTIONS as the f2fs_reflink
+	  baseline.
+
+	      [f2fs_reflink_4k]
+	      MKFS_OPTIONS='-f'
+
+endif # FSTESTS_F2FS_SECTION_REFLINK_ENABLED
+
+config FSTESTS_F2FS_SECTION_NOCRC_ENABLED
+	bool "Enable testing sections which don't have CRC enabled"
+	default y
+	help
+	  Enabling this option allows you to select a host used to test f2fs
+	  without checksums (CRC) enabled. This is useful to test older
+	  kernels or configurations which disable checksums.
+
+if FSTESTS_F2FS_SECTION_NOCRC_ENABLED
+
+config FSTESTS_F2FS_SECTION_NOCRC
+	bool "Enable testing section: f2fs_nocrc"
+	help
+	  This will create a host to test the baseline of fstests without
+	  checksums (CRC) enabled. Modern f2fs-tools disables checksums by
+	  default unless explicitly enabled with -O sb_checksum, so this
+	  section is identical to the f2fs_reflink baseline.
+
+	      [f2fs_nocrc]
+	      MKFS_OPTIONS='-f'
+
+config FSTESTS_F2FS_SECTION_NOCRC_4K
+	bool "Enable testing section: f2fs_nocrc_4k"
+	help
+	  This will create a host to test the baseline of fstests without
+	  checksums (CRC) enabled. f2fs always uses a 4k block size, so
+	  this section uses the same MKFS_OPTIONS as the f2fs_nocrc
+	  baseline.
+
+	      [f2fs_nocrc_4k]
+	      MKFS_OPTIONS='-f'
+
+endif # FSTESTS_F2FS_SECTION_NOCRC_ENABLED
+
+endif # FSTESTS_F2FS_MANUAL_COVERAGE
+
+if !FSTESTS_F2FS_MANUAL_COVERAGE
+
+config FSTESTS_F2FS_SECTION_REFLINK_ENABLED
+	bool
+	default y
+
+config FSTESTS_F2FS_SECTION_REFLINK
+	bool
+	default y
+
+config FSTESTS_F2FS_SECTION_REFLINK_4K
+	bool
+	default y
+
+config FSTESTS_F2FS_SECTION_NOCRC_ENABLED
+	bool
+	default y
+
+config FSTESTS_F2FS_SECTION_NOCRC
+	bool
+	default y
+
+config FSTESTS_F2FS_SECTION_NOCRC_4K
+	bool
+	default y
+
+endif # !FSTESTS_F2FS_MANUAL_COVERAGE

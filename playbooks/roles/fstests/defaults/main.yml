@@ -159,6 +159,11 @@ fstests_btrfs_section_nohofspace_zstd: false
 fstests_btrfs_section_simple: false
 fstests_btrfs_section_simple_zns: false
 
+fstests_f2fs_section_reflink: false
+fstests_f2fs_section_reflink_4k: false
+fstests_f2fs_section_nocrc: false
+fstests_f2fs_section_nocrc_4k: false
+
 fstests_nfs_enable: false
 fstests_nfs_use_kdevops_nfsd: false
 fstests_nfs_section_pnfs: false

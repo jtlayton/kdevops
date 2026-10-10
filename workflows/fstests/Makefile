@@ -37,6 +37,10 @@ ifeq (y,$(CONFIG_FSTESTS_TMPFS))
 include $(TOPDIR)/workflows/fstests/tmpfs/Makefile
 endif
 
+ifeq (y,$(CONFIG_FSTESTS_F2FS))
+include $(TOPDIR)/workflows/fstests/f2fs/Makefile
+endif
+
 ifeq (y,$(CONFIG_QEMU_ENABLE_NVME_ZNS))
 FSTESTS_ARGS += fstests_test_dev_zns='$(subst ",,$(CONFIG_FSTESTS_TEST_DEV_ZNS))'
 FSTESTS_ARGS += fstests_zns_enabled='$(subst ",,$(CONFIG_QEMU_ENABLE_NVME_ZNS))'

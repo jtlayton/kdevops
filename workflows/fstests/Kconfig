@@ -75,6 +75,11 @@ config FSTESTS_EXT4
 	help
 	  This will target testing the ext4 filesystem.
 
+config FSTESTS_F2FS
+	bool "f2fs"
+	help
+	  This will target testing the f2fs filesystem.
+
 config FSTESTS_NFS
 	bool "nfs"
 	select FSTESTS_NFS_ENABLE
@@ -102,6 +107,7 @@ config FSTESTS_FSTYP
 	default "xfs" if FSTESTS_XFS
 	default "btrfs" if FSTESTS_BTRFS
 	default "ext4" if FSTESTS_EXT4
+	default "f2fs" if FSTESTS_F2FS
 	default "nfs" if FSTESTS_NFS
 	default "cifs" if FSTESTS_CIFS
 	default "tmpfs" if FSTESTS_TMPFS
@@ -286,6 +292,14 @@ source "workflows/fstests/ext4/Kconfig"
 endmenu
 
 endif # FSTESTS_EXT4
+
+if FSTESTS_F2FS
+
+menu "Configure how to test f2fs"
+source "workflows/fstests/f2fs/Kconfig"
+endmenu
+
+endif # FSTESTS_F2FS
 
 if FSTESTS_NFS
 

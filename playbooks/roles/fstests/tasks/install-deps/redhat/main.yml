@@ -35,6 +35,7 @@
       - xfsprogs-devel
       - xfsdump
       - e2fsprogs
+      - f2fs-tools
       - gawk
       - util-linux
       - uuid

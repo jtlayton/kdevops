@@ -41,6 +41,7 @@
       - xfsprogs
       - e2fsprogs
       - btrfs-progs
+      - f2fs-tools
       - gawk
       - uuid-runtime
       - acl
